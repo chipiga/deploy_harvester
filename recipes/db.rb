@@ -22,10 +22,10 @@ namespace :db do
 
     desc "Create database.yml in shared path with settings for all env"
     task :yaml do
-      set(:db_user) { Capistrano::CLI.ui.ask "Enter #{environment} database username:" }
-      set(:db_pass) { Capistrano::CLI.password_prompt "Enter #{environment} database password:" }
+      set(:db_user) { Capistrano::CLI.ui.ask "Enter database username:" }
+      set(:db_pass) { Capistrano::CLI.password_prompt "Enter database password:" }
       set(:db_name) { Capistrano::CLI.ui.ask "Enter basic database name:" }
-      set(:db_adapter) { Capistrano::CLI.ui.ask "Enter #{environment} database adapter:" }
+      set(:db_adapter) { Capistrano::CLI.ui.ask "Enter database adapter:" }
       
       db_config = <<-CONFIG
 base: &base
@@ -85,7 +85,7 @@ CONFIG
       # cmd << "--password='#{db_config['password']}'" unless db_config['password'].to_s.empty?
       # cmd << db_config['database']
       # run cmd.flatten.join ' '
-      # TODO?
+      run_rake "db:backup:restore"
     end
   
     desc 'Downloads db/#{environment}-data.sql from the remote environment to your local machine'
@@ -100,7 +100,7 @@ CONFIG
 
     desc 'Dumps, downloads and then cleans up the remote db backup'
     task :runner do
-      backup
+      dump
       download
       cleanup
     end

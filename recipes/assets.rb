@@ -46,12 +46,12 @@ namespace :assets do
     
     desc 'Remove remote assets backup'
     task :cleanup, :roles => [ :app, :web ], :except => { :no_release => true } do
-      run "rm #{shared_assets_path}/db/#{environment}-assets.tar.bz2"
+      run "rm #{shared_assets_path}/#{environment}-assets.tar.bz2"
     end
     
     desc 'Dumps, downloads and then cleans up the remote assets backup'
     task :runner do
-      backup
+      dump
       download
       cleanup
     end

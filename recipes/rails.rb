@@ -44,7 +44,12 @@ namespace :rails do
     put out.join(''), "#{latest_release}/config/environment.rb"
   end
   # after "deploy:update_code", "rails:force_env"
-
+  
+  desc "Install rails depending gems"
+  task :gems_install, :roles => :app do
+    sudo_run_rake "gems:install"
+  end
+  
   # ===============================================================
   # MAINTENANCE TASKS
   # ===============================================================

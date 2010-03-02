@@ -18,8 +18,14 @@ end
 # run.  This always runs tasks against the latest release, so it's only valid
 # to use after +update_code+ has been run.
 def run_rake(*tasks)
-  rake = fetch(:rake, 'rake')
   tasks.each do |task|
-    run "cd #{latest_release}; #{rake} RAILS_ENV=#{environment} #{task}"
+    run "cd #{latest_release}; rake RAILS_ENV=#{environment} #{task}"
   end
 end
+
+def sudo_run_rake(*tasks)
+  tasks.each do |task|
+    run "cd #{latest_release}; sudo rake RAILS_ENV=#{environment} #{task}"
+  end
+end
+
