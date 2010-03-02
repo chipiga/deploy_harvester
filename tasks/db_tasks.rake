@@ -24,7 +24,6 @@ WARNING: this completely nukes the existing database! Use SOURCE_ENV to
 specify which dump should be loaded. Defaults to 'production'."
 TEXT
     task :restore => [ :environment, "db:drop", "db:create" ] do
-    # task :restore=> [ :environment, "db:reset" ] do
       source_env = ENV['SOURCE_ENV'] || 'production'
  
       abc = ActiveRecord::Base.configurations[RAILS_ENV]

@@ -85,7 +85,7 @@ CONFIG
       # cmd << "--password='#{db_config['password']}'" unless db_config['password'].to_s.empty?
       # cmd << db_config['database']
       # run cmd.flatten.join ' '
-      run_rake "db:backup:restore"
+      run_rake "SOURCE_ENV=#{environment} db:backup:restore"
     end
   
     desc 'Downloads db/#{environment}-data.sql from the remote environment to your local machine'

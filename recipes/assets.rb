@@ -30,11 +30,12 @@ namespace :assets do
     desc "Create a backup of all the shared assets"
     task :dump, :roles => [ :app, :web ], :except => { :no_release => true } do
       run "if [ -d #{shared_assets_path} ]; then cd #{shared_assets_path} && tar cjf #{environment}-assets.tar.bz2 #{asset_directories.join(" ")}; fi"
+      # run_rake "assets:backup:dump"
     end
     
     desc "Load existing assets backup"
     task :restore, :roles => [ :app, :web ], :except => { :no_release => true } do
-      # TODO?
+      run_rake "SOURCE_ENV=#{environment} assets:backup:restore"
     end
 
     desc 'Download remote assets backup'
