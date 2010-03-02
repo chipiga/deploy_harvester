@@ -1,7 +1,7 @@
 namespace :spree do
   desc 'Bootstrap EMPTY spree database with default data'
   task :bootstrap, :roles => :db, :only => { :primary => true } do
-    run "cd #{deploy_to}/#{current_dir} && " +
+    run "cd #{latest_release} && " +
       "echo -e 'no' | rake RAILS_ENV=#{environment} db:bootstrap --trace"
   end
   
