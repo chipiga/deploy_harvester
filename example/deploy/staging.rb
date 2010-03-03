@@ -25,7 +25,7 @@ set :asset_directories, ['public/assets', 'public/uploads']
 
 # Recipes hooks
 after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path
-after "deploy:restart", "rails:ping" # ping passenger to start the rails instance
+after "deploy:restart", "tools:ping" # ping passenger to start the rails instance
 after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
 after 'deploy:setup', 'assets:directories:create'
 after 'deploy:finalize_update', 'assets:directories:symlink'

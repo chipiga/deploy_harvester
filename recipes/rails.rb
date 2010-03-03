@@ -1,5 +1,3 @@
-set :local_ping_path, 'http://localhost'
-
 namespace :rails do
   # ===============================================================
   # UTILITY TASKS
@@ -20,13 +18,6 @@ namespace :rails do
     try_sudo "chown -R #{user}:#{user} #{current_path}/tmp"
   end
   # after "deploy:restart", "rails:repair_permissions" # fix the permissions to work properly
-
-  desc "Pings localhost to startup server"
-  task :ping, :roles => :app do
-    puts "Pinging the web server to start it"
-    run "wget -O /dev/null #{local_ping_path} 2>/dev/null"
-  end
-  # after "deploy:restart", "rails:ping" # ping passenger to start the rails instance
   
   # Because of nginx passenger bug - it just ignores rails_env
   # http://groups.google.com/group/phusion-passenger/browse_thread/thread/f91cd54bd379ad26/0a510133a080daac

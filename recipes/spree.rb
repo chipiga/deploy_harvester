@@ -13,9 +13,9 @@ namespace :spree do
   desc 'Performs clean spree install'
   task :install do
     deploy.setup
-    deploy.update_code
     db.create.database
     db.create.yaml
+    deploy.update_code
     spree.bootstrap
     spree.disable_ssl
     deploy.symlink
