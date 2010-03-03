@@ -9,4 +9,16 @@ namespace :spree do
   task :disable_ssl, :roles => :db, :only => { :primary => true } do
     run_rake 'spree:disable_ssl'
   end
+  
+  desc 'Performs clean spree install'
+  task :install do
+    deploy.setup
+    deploy.update_code
+    db.create.database
+    db.create.yaml
+    spree.bootstrap
+    spree.disable_ssl
+    deploy.symlink
+    deploy.restart
+  end
 end
