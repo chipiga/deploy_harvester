@@ -1,4 +1,25 @@
+require 'ya2yaml'
+
 namespace :db do
+  desc "Dump a class to YML, give class name in square brackets, use rake -s for silent"
+  task :dump_utf8 , [:clazz]  => :environment do  |t , args|
+    clazz = eval(args.clazz)
+    objects = {}
+    clazz.find( :all ).each do |obj|
+      attributes = obj.attributes
+      attributes.delete("created_at")   
+      attributes.delete("updated_at")   
+      name = attributes["name"] 
+      unless name
+        name = args.clazz 
+        name = name +   "_" + attributes["id"].to_s if attributes["id"]
+      end
+      name = name.gsub( " " , "_")
+      objects[name] = attributes
+    end
+    puts objects.ya2yaml
+  end
+  
   namespace :backup do
     desc "Dumps the database for the current environment into db/environment-data.sql.bz2."
     task :dump => :environment do
